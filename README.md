@@ -48,6 +48,7 @@ POI type(s)      | 132    | 1    | uint8 bitmask                      | A bitmas
 zone(s)          | 133    | 1    | uint8 bitmask                      | A bitmask where each bit is a boolean flag to activate (1) or deactivate (0) each zone in the trail
 
 * Offsets and sizes are in bytes
+* Integer bytes are in big endian order
 * A data payload is exactly 134 bytes long and should fit within a version 10 QR code (57x57 modules) in binary format with error correction level Q
 * Strings must be truncated if they have too many bytes
 * Strings must be padded with spaces to fit the expected byte length
