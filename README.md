@@ -40,7 +40,7 @@ Field            | Offset | Size | Type                               | Descript
 version          | 0      | 1    | uint8                              | The binary format version (0-255)
 creator name     | 1      | 40   | UTF-8 string                       | The name of the user who manages the excursion
 excursion id     | 41     | 5    | UTF-8 string                       | The unique identifier of the excursion
-excursion date   | 46     | 4    | uint32 (Unix timestamp in minutes) | The date at which the excursion was planned
+excursion date   | 46     | 4    | uint32 (Unix timestamp in seconds) | The date at which the excursion was planned
 excursion name   | 50     | 60   | UTF-8 string                       | The name of the excursion
 participant id   | 110    | 2    | UTF-8 string                       | The identifier of the participant (unique for the excursion)
 participant name | 112    | 20   | UTF-8 string                       | The name of the participant
@@ -52,8 +52,9 @@ zone(s)          | 133    | 1    | uint8 bitmask                      | A bitmas
 * A data payload is exactly 134 bytes long and should fit within a version 10 QR code (57x57 modules) in binary format with error correction level Q
 * Strings must be truncated if they have too many bytes
 * Strings must be padded with spaces to fit the expected byte length
-* Dates are truncated to the minute (second and millisecond precision is lost)
-* Bitmask offsets go from least significant (0) to most significant bit (e.g. 7 for a 1-byte bitmask)
+* Dates are truncated to the second (millisecond precision is lost)
+* Dates are unsigned 32-bit integers with a max value of `2 ^ 32 - 1` seconds from the Unix epoch (the largest date that can be represented is Sun, 07 Feb 2106 06:28:15)
+* Bitmask offsets 0 and 7 correspond to the least significant and most significant bit, respectively, in a 1-byte bitmask
 
 #### POI types
 

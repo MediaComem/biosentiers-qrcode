@@ -9,7 +9,7 @@ describe('bioqr', () => {
       version: 0,
       creatorName: 'Räksmörgås º¬∆',
       excursionId: 'x728s',
-      excursionDate: moment().seconds(0).milliseconds(0).toDate(),
+      excursionDate: moment().milliseconds(0).toDate(),
       excursionName: 'ジ　エクスクルシオン',
       participantId: 'f8',
       participantName: 'Bob',

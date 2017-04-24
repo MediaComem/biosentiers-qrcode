@@ -13,7 +13,7 @@ export function encode(bytes, offset, dateOrTimestamp) {
     throw new Error(`Timestamp must be positive (got ${timestamp})`);
   }
 
-  const minutes = Math.floor(timestamp / 60000);
+  const minutes = Math.floor(timestamp / 1000);
   return encodeUint(bytes, offset, minutes, 4);
 }
 
@@ -22,5 +22,5 @@ export function encode(bytes, offset, dateOrTimestamp) {
  */
 export function decode(bytes, offset) {
   const minutes = decodeUint(bytes, offset, 4);
-  return new Date(minutes * 60000);
+  return new Date(minutes * 1000);
 }
