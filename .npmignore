@@ -1,0 +1,8 @@
+.*
+gulpfile.js
+node_modules
+bower_components
+NOTES.md
+src
+test
+tmp
