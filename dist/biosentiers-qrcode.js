@@ -282,7 +282,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    throw new Error('Timestamp must be positive (got ' + timestamp + ')');
 	  }
 	
-	  var minutes = Math.floor(timestamp / 60000);
+	  var minutes = Math.floor(timestamp / 1000);
 	  return (0, _uint.encode)(bytes, offset, minutes, 4);
 	}
 	
@@ -291,7 +291,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	function decode(bytes, offset) {
 	  var minutes = (0, _uint.decode)(bytes, offset, 4);
-	  return new Date(minutes * 60000);
+	  return new Date(minutes * 1000);
 	}
 
 /***/ },
