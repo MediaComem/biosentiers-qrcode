@@ -5,14 +5,18 @@ $(function() {
 
   var sample = {
     version: 1,
-    creatorName: 'Räksmörgås ∆',
-    excursionId: 'x728s',
-    excursionDate: new Date(),
-    excursionName: 'ジ　エクスクルシオン',
-    participantId: 'f8',
-    participantName: 'Bob',
-    types: [ 'bird', 'flower' ],
-    zones: [ 1, 3 ]
+    excursion: {
+      creatorName: 'Räksmörgås º¬∆',
+      id: 'x728s',
+      date: new Date(),
+      name: 'ジ　エクスクルシオン',
+      participant: {
+        id: 'f8',
+        name: 'Bob',
+      },
+      types: ['bird', 'flower'],
+      zones: [1, 3]
+    }
   };
 
   var $sourceTextarea = $('#qr-form .input textarea');
@@ -38,7 +42,7 @@ $(function() {
 
     try {
       var data = JSON.parse($sourceTextarea.val());
-      data.excursionDate = moment(data.excursionDate).toDate();
+      data.excursion.date = moment(data.excursion.date).toDate();
 
       var encoded = bioqr.encode(data, { format: 'numeric'});
 
