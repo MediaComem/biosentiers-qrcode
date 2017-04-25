@@ -5,7 +5,7 @@ import { encode as encodeUtf8String, decode as decodeUtf8String } from '../binar
 import Encoder from '../binary/encoder';
 import Decoder from '../binary/decoder';
 
-const FORMAT_VERSION = 0;
+const FORMAT_VERSION = 1;
 const FORMAT_LENGTH = 134;
 const CREATOR_NAME_LENGTH = 40;
 const EXCURSION_ID_LENGTH = 5;

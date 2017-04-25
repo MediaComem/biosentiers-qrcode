@@ -4,7 +4,7 @@
 $(function() {
 
   var sample = {
-    version: 0,
+    version: 1,
     creatorName: 'Räksmörgås ∆',
     excursionId: 'x728s',
     excursionDate: new Date(),
@@ -40,10 +40,10 @@ $(function() {
       var data = JSON.parse($sourceTextarea.val());
       data.excursionDate = moment(data.excursionDate).toDate();
 
-      var encoded = bioqr.encode(data);
+      var encoded = bioqr.encode(data, { format: 'numeric'});
 
       decode(encoded);
-      generateQr(data);
+      generateQr(encoded);
     } catch(e) {
       setAlert($encodingAlert, e.stack);
     }
@@ -53,7 +53,7 @@ $(function() {
     setAlert($decodingAlert, false);
 
     try {
-      var decoded = bioqr.decode(data);
+      var decoded = bioqr.decode(data, { format: 'numeric' });
       $decodedTextarea.val(JSON.stringify(decoded, undefined, 2));
     } catch(e) {
       setAlert($decodingAlert, e.stack);
@@ -72,7 +72,7 @@ $(function() {
       };
 
       var segs = [
-        { data: bioqr.encode(data, { format: 'binary' }), mode: 'byte' }
+        { data: data, mode: 'numeric' }
       ];
 
       qrcodelib.toCanvas(document.getElementById('qr-canvas'), segs, options, function (error) {
