@@ -69,22 +69,58 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	function encode(data, options) {
+	  options = options || {};
+	
+	  var bytes = void 0;
 	  switch (data.version) {
 	    case 0:
-	      return (0, _v.encode)(data, options);
+	      bytes = (0, _v.encode)(data, options);
+	      break;
 	    default:
 	      throw new Error('Unknown format version ' + data.version);
 	  }
+	
+	  if (options.format == 'string') {
+	    return convertBytesToString(bytes);
+	  } else {
+	    return bytes;
+	  }
 	}
 	
-	function decode(string, options) {
-	  var version = string.charCodeAt(0);
+	function decode(data, options) {
+	
+	  var bytes = void 0;
+	  if (typeof data == 'string') {
+	    bytes = convertStringToBytes(data);
+	  } else {
+	    bytes = data;
+	  }
+	
+	  var version = bytes[0];
 	  switch (version) {
 	    case 0:
-	      return (0, _v.decode)(string, options);
+	      return (0, _v.decode)(bytes, options);
 	    default:
-	      throw new Error('String is not in a known format version ' + version);
+	      throw new Error('Data is not in a known format version ' + version);
 	  }
+	}
+	
+	/**
+	 * Converts a byte array to a string.
+	 */
+	function convertBytesToString(bytes) {
+	  return bytes.map(function (byte) {
+	    return String.fromCodePoint(ensureByte(byte));
+	  }).join('');
+	}
+	
+	/**
+	 * Converts a string to a byte array.
+	 */
+	function convertStringToBytes(string) {
+	  return string.split('').map(function (char) {
+	    return char.charCodeAt(0);
+	  });
 	}
 	
 	exports.default = bioqr;
@@ -148,7 +184,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    throw new Error('Format 0 byte length should be 134 (got ' + encoder.bytes.length + ')');
 	  }
 	
-	  return encoder.toString();
+	  return encoder.bytes;
 	}
 	
 	function decode(string, options) {
@@ -497,19 +533,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	      return result;
 	    }
-	
-	    /**
-	     * Converts this encoder's internal byte array to a string of characters that can
-	     * all be represented with 1 byte in UTF-8.
-	     */
-	
-	  }, {
-	    key: 'toString',
-	    value: function toString() {
-	      return this.bytes.map(function (byte) {
-	        return String.fromCodePoint((0, _byte.ensureByte)(byte));
-	      }).join('');
-	    }
 	  }]);
 	
 	  return Encoder;
@@ -574,12 +597,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    this.offset = 0;
 	    this.bytes = bytes;
-	
-	    if (typeof bytes == 'string') {
-	      this.bytes = this.bytes.split('').map(function (char) {
-	        return (0, _byte.ensureByte)(char.charCodeAt(0));
-	      });
-	    }
 	  }
 	
 	  /**

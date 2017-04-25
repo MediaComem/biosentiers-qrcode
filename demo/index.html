@@ -27,15 +27,9 @@
         </div>
       </form>
 
-      <div id="qrcodes">
-        <div class="col-xs-6 qr1">
-          <div class="alert alert-danger hidden"></div>
-          <canvas id="qr-canvas1" width="250" height="250"></canvas>
-        </div>
-        <div class="col-xs-6 qr2">
-          <div class="alert alert-danger hidden"></div>
-          <div id="qr-canvas2"></div>
-        </div>
+      <div id="qrcode">
+        <div class="alert alert-danger hidden"></div>
+        <canvas id="qr-canvas" width="250" height="250"></canvas>
       </div>
 
     </div>
@@ -45,10 +39,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 
     <!-- qrcode: QR code/2d barcode generator (https://www.npmjs.com/package/qrcode) -->
-    <script src="qrcode1.js"></script>
-
-    <!-- qrcode.js: Cross-browser QRCode generator for JavaScript (https://davidshimjs.github.io/qrcodejs/) -->
-    <script src="qrcode2.js"></script>
+    <script src="qrcode.js"></script>
 
     <!-- BioSentiers QR code library -->
     <script src="../dist/biosentiers-qrcode.js"></script>

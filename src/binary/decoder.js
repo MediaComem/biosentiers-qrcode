@@ -14,12 +14,6 @@ export default class Decoder {
   constructor(bytes) {
     this.offset = 0;
     this.bytes = bytes;
-
-    if (typeof(bytes) == 'string') {
-      this.bytes = this.bytes.split('').map(function(char) {
-        return ensureByte(char.charCodeAt(0));
-      });
-    }
   }
 
   /**

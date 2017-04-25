@@ -6,22 +6,58 @@ const bioqr = {
 };
 
 function encode(data, options) {
+  options = options || {};
+
+  let bytes;
   switch (data.version) {
     case 0:
-      return v0Encode(data, options);
+      bytes = v0Encode(data, options);
+      break;
     default:
       throw new Error(`Unknown format version ${data.version}`);
   }
+
+  if (options.format == 'string') {
+    return convertBytesToString(bytes);
+  } else {
+    return bytes;
+  }
 }
 
-function decode(string, options) {
-  const version = string.charCodeAt(0);
+function decode(data, options) {
+
+  let bytes;
+  if (typeof(data) == 'string') {
+    bytes = convertStringToBytes(data);
+  } else {
+    bytes = data;
+  }
+
+  const version = bytes[0];
   switch (version) {
     case 0:
-      return v0Decode(string, options);
+      return v0Decode(bytes, options);
     default:
-      throw new Error(`String is not in a known format version ${version}`);
+      throw new Error(`Data is not in a known format version ${version}`);
   }
+}
+
+/**
+ * Converts a byte array to a string.
+ */
+function convertBytesToString(bytes) {
+  return bytes.map(function(byte) {
+    return String.fromCodePoint(ensureByte(byte));
+  }).join('');
+}
+
+/**
+ * Converts a string to a byte array.
+ */
+function convertStringToBytes(string) {
+  return string.split('').map(function(char) {
+    return char.charCodeAt(0);
+  });
 }
 
 export default bioqr;

@@ -31,14 +31,4 @@ export default class Encoder {
 
     return result;
   }
-
-  /**
-   * Converts this encoder's internal byte array to a string of characters that can
-   * all be represented with 1 byte in UTF-8.
-   */
-  toString() {
-    return this.bytes.map(function(byte) {
-      return String.fromCodePoint(ensureByte(byte));
-    }).join('');
-  }
 }

@@ -2,24 +2,16 @@
   display: none;
 }
 
-#qrcodes {
+#qrcode {
   margin-top: 1em;
 }
 
-#qrcodes .alert {
+#qrcode .alert {
   text-align: left;
 }
 
-#qrcodes .col-xs-6 {
+#qrcode {
   text-align: center;
-}
-
-#qr-canvas2 {
-  text-align: center;
-}
-
-#qr-canvas2 img {
-  margin: 0 auto;
 }
 
 #qr-form textarea {

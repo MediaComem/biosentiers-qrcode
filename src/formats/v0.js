@@ -32,7 +32,7 @@ export function encode(data, options) {
     throw new Error(`Format 0 byte length should be 134 (got ${encoder.bytes.length})`);
   }
 
-  return encoder.toString();
+  return encoder.bytes;
 }
 
 export function decode(string, options) {

@@ -18,8 +18,8 @@ describe('bioqr', () => {
     };
 
     var encoded = bioqr.encode(data);
-    expect(encoded).to.be.a('string');
-    expect(encoded[0]).to.eql('\u0000');
+    expect(encoded).to.be.an('array');
+    expect(encoded[0]).to.eql(0);
     expect(encoded).to.have.lengthOf(134);
 
     var decoded = bioqr.decode(encoded);
