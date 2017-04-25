@@ -7,6 +7,9 @@
   "scripts": {},
   "author": "",
   "license": "MIT",
+  "scripts": {
+    "postinstall": "cp node_modules/qrcode/build/qrcode.js qrcode1.js"
+  },
   "dependencies": {
     "qrcode": "^0.8.1"
   }
