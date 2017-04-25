@@ -2951,14 +2951,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  var encoder = new _encoder2.default();
 	  encoder.add(_uint.encode, FORMAT_VERSION, 1);
-	  encoder.add(_utf8String.encode, data.creatorName, CREATOR_NAME_LENGTH);
-	  encoder.add(_utf8String.encode, data.excursionId, EXCURSION_ID_LENGTH);
-	  encoder.add(_timestamp.encode, data.excursionDate);
-	  encoder.add(_utf8String.encode, data.excursionName, EXCURSION_NAME_LENGTH);
-	  encoder.add(_utf8String.encode, data.participantId, PARTICIPANT_ID_LENGTH);
-	  encoder.add(_utf8String.encode, data.participantName, PARTICIPANT_NAME_LENGTH);
-	  encoder.add(_bitmask.encode, data.types, options.types || TYPES);
-	  encoder.add(_bitmask.encode, data.zones);
+	  encoder.add(_utf8String.encode, data.excursion.creatorName, CREATOR_NAME_LENGTH);
+	  encoder.add(_utf8String.encode, data.excursion.id, EXCURSION_ID_LENGTH);
+	  encoder.add(_timestamp.encode, data.excursion.date);
+	  encoder.add(_utf8String.encode, data.excursion.name, EXCURSION_NAME_LENGTH);
+	  encoder.add(_utf8String.encode, data.excursion.participant.id, PARTICIPANT_ID_LENGTH);
+	  encoder.add(_utf8String.encode, data.excursion.participant.name, PARTICIPANT_NAME_LENGTH);
+	  encoder.add(_bitmask.encode, data.excursion.types, options.types || TYPES);
+	  encoder.add(_bitmask.encode, data.excursion.zones);
 	
 	  if (encoder.bytes.length != FORMAT_LENGTH) {
 	    throw new Error('Format 0 byte length should be 134 (got ' + encoder.bytes.length + ')');
@@ -2975,18 +2975,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	    throw new Error('Format 0 byte length should be 134 (got ' + decoder.bytes.length + ')');
 	  }
 	
-	  var decoded = {};
-	  decoded.version = decoder.get(_uint.decode, 1);
-	  decoded.creatorName = decoder.get(_utf8String.decode, CREATOR_NAME_LENGTH);
-	  decoded.excursionId = decoder.get(_utf8String.decode, EXCURSION_ID_LENGTH);
-	  decoded.excursionDate = decoder.get(_timestamp.decode, 4);
-	  decoded.excursionName = decoder.get(_utf8String.decode, EXCURSION_NAME_LENGTH);
-	  decoded.participantId = decoder.get(_utf8String.decode, PARTICIPANT_ID_LENGTH);
-	  decoded.participantName = decoder.get(_utf8String.decode, PARTICIPANT_NAME_LENGTH);
-	  decoded.types = decoder.get(_bitmask.decode, TYPES);
-	  decoded.zones = decoder.get(_bitmask.decode);
-	
-	  return decoded;
+	  return {
+	    version: decoder.get(_uint.decode, 1),
+	    excursion: {
+	      creatorName: decoder.get(_utf8String.decode, CREATOR_NAME_LENGTH),
+	      id: decoder.get(_utf8String.decode, EXCURSION_ID_LENGTH),
+	      date: decoder.get(_timestamp.decode, 4),
+	      name: decoder.get(_utf8String.decode, EXCURSION_NAME_LENGTH),
+	      participant: {
+	        id: decoder.get(_utf8String.decode, PARTICIPANT_ID_LENGTH),
+	        name: decoder.get(_utf8String.decode, PARTICIPANT_NAME_LENGTH)
+	      },
+	      types: decoder.get(_bitmask.decode, TYPES),
+	      zones: decoder.get(_bitmask.decode)
+	    }
+	  };
 	}
 
 /***/ },

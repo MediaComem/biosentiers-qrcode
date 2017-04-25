@@ -19,14 +19,14 @@ export function encode(data, options) {
 
   var encoder = new Encoder();
   encoder.add(encodeUint, FORMAT_VERSION, 1);
-  encoder.add(encodeUtf8String, data.creatorName, CREATOR_NAME_LENGTH);
-  encoder.add(encodeUtf8String, data.excursionId, EXCURSION_ID_LENGTH);
-  encoder.add(encodeTimestamp, data.excursionDate);
-  encoder.add(encodeUtf8String, data.excursionName, EXCURSION_NAME_LENGTH);
-  encoder.add(encodeUtf8String, data.participantId, PARTICIPANT_ID_LENGTH);
-  encoder.add(encodeUtf8String, data.participantName, PARTICIPANT_NAME_LENGTH);
-  encoder.add(encodeBitmask, data.types, options.types || TYPES);
-  encoder.add(encodeBitmask, data.zones);
+  encoder.add(encodeUtf8String, data.excursion.creatorName, CREATOR_NAME_LENGTH);
+  encoder.add(encodeUtf8String, data.excursion.id, EXCURSION_ID_LENGTH);
+  encoder.add(encodeTimestamp, data.excursion.date);
+  encoder.add(encodeUtf8String, data.excursion.name, EXCURSION_NAME_LENGTH);
+  encoder.add(encodeUtf8String, data.excursion.participant.id, PARTICIPANT_ID_LENGTH);
+  encoder.add(encodeUtf8String, data.excursion.participant.name, PARTICIPANT_NAME_LENGTH);
+  encoder.add(encodeBitmask, data.excursion.types, options.types || TYPES);
+  encoder.add(encodeBitmask, data.excursion.zones);
 
   if (encoder.bytes.length != FORMAT_LENGTH) {
     throw new Error(`Format 0 byte length should be 134 (got ${encoder.bytes.length})`);
@@ -43,16 +43,19 @@ export function decode(string, options) {
     throw new Error(`Format 0 byte length should be 134 (got ${decoder.bytes.length})`);
   }
 
-  const decoded = {};
-  decoded.version = decoder.get(decodeUint, 1);
-  decoded.creatorName = decoder.get(decodeUtf8String, CREATOR_NAME_LENGTH);
-  decoded.excursionId = decoder.get(decodeUtf8String, EXCURSION_ID_LENGTH);
-  decoded.excursionDate = decoder.get(decodeTimestamp, 4);
-  decoded.excursionName = decoder.get(decodeUtf8String, EXCURSION_NAME_LENGTH);
-  decoded.participantId = decoder.get(decodeUtf8String, PARTICIPANT_ID_LENGTH);
-  decoded.participantName = decoder.get(decodeUtf8String, PARTICIPANT_NAME_LENGTH);
-  decoded.types = decoder.get(decodeBitmask, TYPES);
-  decoded.zones = decoder.get(decodeBitmask);
-
-  return decoded;
+  return {
+    version: decoder.get(decodeUint, 1),
+    excursion: {
+      creatorName: decoder.get(decodeUtf8String, CREATOR_NAME_LENGTH),
+      id: decoder.get(decodeUtf8String, EXCURSION_ID_LENGTH),
+      date: decoder.get(decodeTimestamp, 4),
+      name: decoder.get(decodeUtf8String, EXCURSION_NAME_LENGTH),
+      participant: {
+        id: decoder.get(decodeUtf8String, PARTICIPANT_ID_LENGTH),
+        name: decoder.get(decodeUtf8String, PARTICIPANT_NAME_LENGTH)
+      },
+      types: decoder.get(decodeBitmask, TYPES),
+      zones: decoder.get(decodeBitmask)
+    }
+  };
 }

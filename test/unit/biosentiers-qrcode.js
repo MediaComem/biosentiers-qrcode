@@ -6,14 +6,18 @@ describe('bioqr', () => {
 
   var sampleData = {
     version: 1,
-    creatorName: 'Räksmörgås º¬∆',
-    excursionId: 'x728s',
-    excursionDate: moment().milliseconds(0).toDate(),
-    excursionName: 'ジ　エクスクルシオン',
-    participantId: 'f8',
-    participantName: 'Bob',
-    types: [ 'bird', 'flower' ],
-    zones: [ 1, 3 ]
+    excursion: {
+      creatorName: 'Räksmörgås º¬∆',
+      id: 'x728s',
+      date: moment().milliseconds(0).toDate(),
+      name: 'ジ　エクスクルシオン',
+      participant: {
+        id: 'f8',
+        name: 'Bob',
+      },
+      types: ['bird', 'flower'],
+      zones: [1, 3]
+    }
   };
 
   it('should encode and decode data as a byte array with format version 1', () => {
