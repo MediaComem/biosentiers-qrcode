@@ -1,0 +1,31 @@
+.hidden {
+  display: none;
+}
+
+#qrcodes {
+  margin-top: 1em;
+}
+
+#qrcodes .alert {
+  text-align: left;
+}
+
+#qrcodes .col-xs-6 {
+  text-align: center;
+}
+
+#qr-canvas2 {
+  text-align: center;
+}
+
+#qr-canvas2 img {
+  margin: 0 auto;
+}
+
+#qr-form textarea {
+  font-family: Monaco, Monospace;
+}
+
+#qr-form .alert {
+  margin-top: 1em;
+}

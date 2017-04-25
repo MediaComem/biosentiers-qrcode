@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="demo.css">
+  </head>
+  <body>
+
+    <div class="container">
+
+      <div class="page-header">
+        <h1>BioSentiers QR Code</h1>
+      </div>
+
+      <form id="qr-form" class="clearfix">
+        <div class="col-xs-6 input">
+          <h2>Data</h2>
+          <textarea class="form-control" rows="15"></textarea>
+          <div class="alert alert-danger hidden"></div>
+        </div>
+        <div class="col-xs-6 decoded">
+          <h2>Decoded data</h2>
+          <textarea class="form-control" rows="15" disabled></textarea>
+          <div class="alert alert-danger hidden"></div>
+        </div>
+      </form>
+
+      <div id="qrcodes">
+        <div class="col-xs-6 qr1">
+          <div class="alert alert-danger hidden"></div>
+          <canvas id="qr-canvas1" width="250" height="250"></canvas>
+        </div>
+        <div class="col-xs-6 qr2">
+          <div class="alert alert-danger hidden"></div>
+          <div id="qr-canvas2"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Third-party libraries -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+    <!-- qrcode.js: Cross-browser QRCode generator for JavaScript (https://davidshimjs.github.io/qrcodejs/) -->
+    <script src="qrcode.js"></script>
+
+    <!-- qrcode: QR code/2d barcode generator (https://www.npmjs.com/package/qrcode) -->
+    <script src="node_modules/qrcode/build/qrcode.js"></script>
+
+    <!-- BioSentiers QR code library -->
+    <script src="../dist/biosentiers-qrcode.js"></script>
+
+    <!-- Demo script -->
+    <script src="demo.js"></script>
+  </body>
+</html>

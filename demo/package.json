@@ -1,0 +1,13 @@
+{
+  "name": "biosentiers-qrcode-demo",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "demo.js",
+  "scripts": {},
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "qrcode": "^0.8.1"
+  }
+}
