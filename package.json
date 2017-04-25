@@ -57,5 +57,8 @@
   "babelBoilerplateOptions": {
     "entryFileName": "biosentiers-qrcode.js",
     "mainVarName": "bioqr"
+  },
+  "dependencies": {
+    "bignumber.js": "^4.0.1"
   }
 }
