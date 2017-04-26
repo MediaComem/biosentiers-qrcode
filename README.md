@@ -18,7 +18,7 @@ var string = bioqr.encode({
       id: 'f8',
       name: 'Bob',
     },
-    types: ['bird', 'flower'],
+    themes: ['bird', 'flower'],
     zones: [1, 3]
   }
 });
@@ -60,9 +60,9 @@ zone(s)          | 133    | 1    | uint8 bitmask                      | A bitmas
 * Dates are unsigned 32-bit integers with a max value of `2 ^ 32 - 1` seconds from the Unix epoch (the largest date that can be represented is Sun, 07 Feb 2106 06:28:15)
 * Bitmask offsets 0 and 7 correspond to the least significant and most significant bit, respectively, in a 1-byte bitmask
 
-#### POI types
+#### POI themes
 
-Type      | Bitmask offset
+Themes    | Bitmask offset
 :---      | :---
 bird      | 0
 butterfly | 1

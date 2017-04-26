@@ -12,7 +12,7 @@ const EXCURSION_ID_LENGTH = 5;
 const EXCURSION_NAME_LENGTH = 60;
 const PARTICIPANT_ID_LENGTH = 2;
 const PARTICIPANT_NAME_LENGTH = 20;
-const TYPES = [ 'bird', 'butterfly', 'flower', 'tree'  ];
+const THEMES = [ 'bird', 'butterfly', 'flower', 'tree'  ];
 
 export function encode(data, options) {
   options = options || {};
@@ -25,7 +25,7 @@ export function encode(data, options) {
   encoder.add(encodeUtf8String, data.excursion.name, EXCURSION_NAME_LENGTH);
   encoder.add(encodeUtf8String, data.excursion.participant.id, PARTICIPANT_ID_LENGTH);
   encoder.add(encodeUtf8String, data.excursion.participant.name, PARTICIPANT_NAME_LENGTH);
-  encoder.add(encodeBitmask, data.excursion.types, options.types || TYPES);
+  encoder.add(encodeBitmask, data.excursion.themes, options.themes || THEMES);
   encoder.add(encodeBitmask, data.excursion.zones);
 
   if (encoder.bytes.length != FORMAT_LENGTH) {
@@ -54,7 +54,7 @@ export function decode(string, options) {
         id: decoder.get(decodeUtf8String, PARTICIPANT_ID_LENGTH),
         name: decoder.get(decodeUtf8String, PARTICIPANT_NAME_LENGTH)
       },
-      types: decoder.get(decodeBitmask, TYPES),
+      themes: decoder.get(decodeBitmask, THEMES),
       zones: decoder.get(decodeBitmask)
     }
   };
