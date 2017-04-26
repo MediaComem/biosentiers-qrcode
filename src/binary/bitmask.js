@@ -5,9 +5,11 @@
  * For example, the values [ 1, 3 ] would be encoded as the integer 10 (or 00001010 in binary).
  *
  * If references are given, then each value must be one of the reference values.
- * The references array must not contain more than 32 items.
+ * The references array must not contain more than 8 items.
  * For example, the values [ 'foo', 'baz' ] with references [ 'foo', 'bar', 'baz' ]
  * would be encoded as the integer 5 (or 00000101 in binary).
+ *
+ * If a reference function is given, it is used to convert each value to the corresponding bitmask index.
  */
 export function encode(bytes, offset, values, references) {
   let byte = 0;
@@ -16,16 +18,22 @@ export function encode(bytes, offset, values, references) {
 
     let bitmaskIndex = value;
 
-    // If references are given, convert the value to its index in the reference array
-    if (references) {
+    // If a reference function is given, call it with each value to obtain the corresponding bitmask index
+    if (typeof(references) == 'function') {
+      bitmaskIndex = references(value);
+    }
+    // If a references array is given, convert each value to its index in the reference array
+    else if (references) {
       bitmaskIndex = references.indexOf(value);
       if (bitmaskIndex < 0) {
         throw new Error(`Unknown bitmask value ${value} (allowed: ${references.join(', ')})`);
       } else if (bitmaskIndex > 7) {
-        throw new Error(`References have too many values (${references.length} > 32)`);
+        throw new Error(`References have too many values (${references.length} > 8)`);
       }
-    } else if (!Number.isInteger(bitmaskIndex) || bitmaskIndex < 0 || bitmaskIndex > 31) {
-      throw new Error(`Bitmask value ${i} must be an integer between 0 and 31 or one of the reference values (got ${bitmaskIndex})`);
+    }
+
+    if (!Number.isInteger(bitmaskIndex) || bitmaskIndex < 0 || bitmaskIndex > 7) {
+      throw new Error(`Bitmask value ${i} must be an integer between 0 and 7 or one of the reference values (got ${bitmaskIndex})`);
     }
 
     // Set the correct bit to 1 in the bitmask
@@ -57,6 +65,8 @@ export function decode(bytes, offset, references) {
       // Add the index (or reference value) to the result array if that is the case
       if (!references) {
         values.push(i);
+      } else if (typeof(references) == 'function') {
+        values.push(references(i));
       } else if (references[i]) {
         values.push(references[i]);
       }

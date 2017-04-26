@@ -26,7 +26,7 @@ export function encode(data, options) {
   encoder.add(encodeUtf8String, data.excursion.participant.id, PARTICIPANT_ID_LENGTH);
   encoder.add(encodeUtf8String, data.excursion.participant.name, PARTICIPANT_NAME_LENGTH);
   encoder.add(encodeBitmask, data.excursion.themes, options.themes || THEMES);
-  encoder.add(encodeBitmask, data.excursion.zones);
+  encoder.add(encodeBitmask, data.excursion.zones, options.zones);
 
   if (encoder.bytes.length != FORMAT_LENGTH) {
     throw new Error(`Format 0 byte length should be 134 (got ${encoder.bytes.length})`);
@@ -54,8 +54,8 @@ export function decode(string, options) {
         id: decoder.get(decodeUtf8String, PARTICIPANT_ID_LENGTH),
         name: decoder.get(decodeUtf8String, PARTICIPANT_NAME_LENGTH)
       },
-      themes: decoder.get(decodeBitmask, THEMES),
-      zones: decoder.get(decodeBitmask)
+      themes: decoder.get(decodeBitmask, options.themes || THEMES),
+      zones: decoder.get(decodeBitmask, options.zones)
     }
   };
 }
