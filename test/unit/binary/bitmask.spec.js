@@ -27,6 +27,12 @@ describe('bitmask', () => {
       expectBitmask(36);
     });
 
+    it('should not encode a bitmask with out-of-bounds indices', () => {
+      expect(() => {
+        encode(bytes, 0, [ 3, 8 ]);
+      }).to.throw('Bitmask value 1 must be an integer between 0 and 7 or one of the reference values (got 8)');
+    });
+
     function expectBitmask(value) {
       expect(bytes).to.have.lengthOf(1);
       expect(bytes[0]).to.eql(value);

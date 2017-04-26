@@ -41,8 +41,8 @@ The encoded data can be used in a QR code in binary format.
 
   ```js
   bioqr.encode(data); // [ 0x01, 0x87, 0x18, 0xC0, ... ] (raw byte array)
-  bioqr.encode(data, { format: 'numeric' }); // "430981398715409183..." (for use in a numeric QR code)
-  bioqr.encode(data, { format: 'string' }) // "\u0001\u0087\u0018\u00C0..." (string version of the byte array)
+  bioqr.encode(data, { format: 'numeric' }); // "430981398715409183..." (for a numeric QR code)
+  bioqr.encode(data, { format: 'string' }) // "\u0001\u0087\u0018\u00C0..." (8-bit string)
   ```
 * `themes` - `Array|Function` - An array of reference values or function to encode/decode the themes bitmask
 
