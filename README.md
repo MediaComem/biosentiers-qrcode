@@ -4,7 +4,7 @@ QR code binary format parser/serializer for [BioSentiers](https://github.com/Med
 
 This library can encode and decode QR code data for the BioSentiers application.
 
-Encoding transforms an object into a 8-bit string:
+Encoding transforms an object into a byte array or other formats (see options):
 
 ```js
 var encoded = bioqr.encode({
@@ -24,7 +24,7 @@ var encoded = bioqr.encode({
 });
 ```
 
-Decoding transforms that string back into the original object:
+Decoding transforms the encoded data back into the original object:
 
 ```js
 var decoded = bioqr.decode(encoded);
@@ -37,6 +37,9 @@ The encoded data can be used in a QR code in binary format.
 
 ## Options
 
+An options object can be passed to `encode` or `decode` as the second argument.
+The following options are available:
+
 * `format` - `String` - Customize the output format
 
   ```js
@@ -44,6 +47,8 @@ The encoded data can be used in a QR code in binary format.
   bioqr.encode(data, { format: 'numeric' }); // "430981398715409183..." (for a numeric QR code)
   bioqr.encode(data, { format: 'string' }) // "\u0001\u0087\u0018\u00C0..." (8-bit string)
   ```
+
+  The same format option must be given for decoding.
 * `themes` - `Array|Function` - An array of reference values or function to encode/decode the themes bitmask
 
   ```js
@@ -61,7 +66,20 @@ The encoded data can be used in a QR code in binary format.
 
 
 
-## Versions
+## Encoding
+
+Data is encoded in the smallest possible number of bytes.
+The `version` property of the data object specifies which encoding version to use.
+
+### All versions
+
+* Offsets and sizes are in bytes
+* Integer and UTF-8 bytes are in big endian order
+* Dates are truncated to the second (millisecond precision is lost)
+* Dates are unsigned 32-bit integers with a max value of `2 ^ 32 - 1` seconds from the Unix epoch (the largest date that can be represented is Sun, 07 Feb 2106 06:28:15)
+* Bitmask offsets 0 and 7 correspond to the least significant and most significant bit, respectively, in a 1-byte bitmask
+* Strings must be truncated if they have too many bytes
+* Strings must be padded with spaces to fit the expected byte length
 
 ### Version 1
 
@@ -77,14 +95,7 @@ participant name | 112    | 20   | UTF-8 string                       | The name
 POI type(s)      | 132    | 1    | uint8 bitmask                      | A bitmask where each bit is a boolean flag to activate (1) or deactivate (0) each POI type
 zone(s)          | 133    | 1    | uint8 bitmask                      | A bitmask where each bit is a boolean flag to activate (1) or deactivate (0) each zone in the trail
 
-* Offsets and sizes are in bytes
-* Integer bytes are in big endian order
 * A data payload is exactly 134 bytes long and should fit within a version 10 QR code (57x57 modules) in binary format with error correction level Q
-* Strings must be truncated if they have too many bytes
-* Strings must be padded with spaces to fit the expected byte length
-* Dates are truncated to the second (millisecond precision is lost)
-* Dates are unsigned 32-bit integers with a max value of `2 ^ 32 - 1` seconds from the Unix epoch (the largest date that can be represented is Sun, 07 Feb 2106 06:28:15)
-* Bitmask offsets 0 and 7 correspond to the least significant and most significant bit, respectively, in a 1-byte bitmask
 
 #### POI themes
 
