@@ -24,14 +24,17 @@ export function encode(bytes, offset, values, references) {
     }
     // If a references array is given, convert each value to its index in the reference array
     else if (references) {
+      if (references.length > 8) {
+        throw new Error(`References have too many values (${references.length} > 8)`);
+      }
+
       bitmaskIndex = references.indexOf(value);
       if (bitmaskIndex < 0) {
         throw new Error(`Unknown bitmask value ${value} (allowed: ${references.join(', ')})`);
-      } else if (bitmaskIndex > 7) {
-        throw new Error(`References have too many values (${references.length} > 8)`);
       }
     }
 
+    // Ensure the bitmask index is valid
     if (!Number.isInteger(bitmaskIndex) || bitmaskIndex < 0 || bitmaskIndex > 7) {
       throw new Error(`Bitmask value ${i} must be an integer between 0 and 7 or one of the reference values (got ${bitmaskIndex})`);
     }

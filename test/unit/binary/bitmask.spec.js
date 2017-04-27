@@ -33,6 +33,24 @@ describe('bitmask', () => {
       }).to.throw('Bitmask value 1 must be an integer between 0 and 7 or one of the reference values (got 8)');
     });
 
+    it('should not encode a bitmask with unknown values', () => {
+      expect(() => {
+        encode(bytes, 0, [ 'foo', 'bar' ], [ 'bar', 'baz', 'qux' ]);
+      }).to.throw('Unknown bitmask value foo (allowed: bar, baz, qux)');
+    });
+
+    it('should not encode a bitmask with out-of-bounds reference values', () => {
+      expect(() => {
+        encode(bytes, 0, [ 'foo2', 'foo9' ], [ 'foo1', 'foo2', 'foo3', 'foo4', 'foo5', 'foo6', 'foo7', 'foo8', 'foo9' ]);
+      }).to.throw('References have too many values (9 > 8)');
+    });
+
+    it('should not encode a bitmask with a custom function returning invalid indices', () => {
+      expect(() => {
+        encode(bytes, 0, [ 'foo', 'bar' ], () => 42);
+      }).to.throw('Bitmask value 0 must be an integer between 0 and 7 or one of the reference values (got 42)');
+    });
+
     function expectBitmask(value) {
       expect(bytes).to.have.lengthOf(1);
       expect(bytes[0]).to.eql(value);
