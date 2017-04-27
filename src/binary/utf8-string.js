@@ -7,7 +7,7 @@
 export function encode(bytes, offset, string, length) {
 
   let currentByte = offset;
-  const stringLength = string.length;
+  const stringLength = string ? string.length : 0;
 
   // For each character in the string...
   for (let i = 0; i < stringLength; i++) {
@@ -35,8 +35,6 @@ export function encode(bytes, offset, string, length) {
   for (let i = 0; i < remainingBytes; i++) {
     bytes.push(0x20); // space
   }
-
-  return bytes;
 }
 
 /**

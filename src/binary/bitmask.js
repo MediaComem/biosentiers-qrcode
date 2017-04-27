@@ -23,7 +23,7 @@ export function encode(bytes, offset, values, references) {
       bitmaskIndex = references(value);
     }
     // If a references array is given, convert each value to its index in the reference array
-    else if (references) {
+    else if (Array.isArray(references)) {
       if (references.length > 8) {
         throw new Error(`References have too many values (${references.length} > 8)`);
       }
@@ -32,6 +32,8 @@ export function encode(bytes, offset, values, references) {
       if (bitmaskIndex < 0) {
         throw new Error(`Unknown bitmask value ${value} (allowed: ${references.join(', ')})`);
       }
+    } else if (references !== undefined && references !== null) {
+      throw new Error(`Unsupported references that is not an array or function (got a value of type ${typeof(references)})`);
     }
 
     // Ensure the bitmask index is valid

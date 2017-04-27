@@ -10,7 +10,7 @@ describe('bitmask', () => {
     it('should encode an empty bitmask', () => {
       encode(bytes, 0, []);
       expectBitmask(0);
-    })
+    });
 
     it('should encode a bitmask from raw indices', () => {
       encode(bytes, 0, [ 0, 4, 7 ]);
@@ -49,6 +49,12 @@ describe('bitmask', () => {
       expect(() => {
         encode(bytes, 0, [ 'foo', 'bar' ], () => 42);
       }).to.throw('Bitmask value 0 must be an integer between 0 and 7 or one of the reference values (got 42)');
+    });
+
+    it('should not accept a references object of the wrong type', () => {
+      expect(() => {
+        encode(bytes, 0, [ 'foo', 'bar' ], { foo: 'bar' });
+      }).to.throw('Unsupported references that is not an array or function (got a value of type object)');
     });
 
     function expectBitmask(value) {
