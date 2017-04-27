@@ -14,7 +14,7 @@ $(function() {
         id: 'f8',
         name: 'Bob',
       },
-      types: ['bird', 'flower'],
+      themes: ['bird', 'flower'],
       zones: [1, 3]
     }
   };
