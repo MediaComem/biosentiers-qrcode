@@ -52,14 +52,16 @@ The following options are available:
 * `themes` - `Array|Function` - An array of reference values or function to encode/decode the themes bitmask
 
   ```js
-  // Assuming the bitmask value is 3
+  // Assuming the bitmask value is 3 (00000011 in binary),
+  // so the first two indices (0 and 1) are active
   bioqr.decode(data, { themes: [ 'foo', 'bar', 'baz' ] }).excursion.themes; // [ 'foo', 'bar' ]
   bioqr.decode(data, { themes: (i) => i * 2 }).excursion.themes; // [ 0, 2 ]
   ```
 * `zones` - `Array|Function` - An array of reference values or function to encode/decode the zones bitmask
 
   ```js
-  // Assuming the bitmask value is 3
+  // Assuming the bitmask value is 3 (00000011 in binary),
+  // so the first two indices (0 and 1) are active
   bioqr.decode(data, { zones: [ 'foo', 'bar', 'baz' ] }).excursion.zones; // [ 'foo', 'bar' ]
   bioqr.decode(data, { zones: (i) => i * 2 }).excursion.zones; // [ 0, 2 ]
   ```
