@@ -3001,6 +3001,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
 	exports.encode = encode;
 	exports.decode = decode;
 	/**
@@ -3028,7 +3031,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      bitmaskIndex = references(value);
 	    }
 	    // If a references array is given, convert each value to its index in the reference array
-	    else if (references) {
+	    else if (Array.isArray(references)) {
 	        if (references.length > 8) {
 	          throw new Error('References have too many values (' + references.length + ' > 8)');
 	        }
@@ -3037,6 +3040,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (bitmaskIndex < 0) {
 	          throw new Error('Unknown bitmask value ' + value + ' (allowed: ' + references.join(', ') + ')');
 	        }
+	      } else if (references !== undefined && references !== null) {
+	        throw new Error('Unsupported references that is not an array or function (got a value of type ' + (typeof references === 'undefined' ? 'undefined' : _typeof(references)) + ')');
 	      }
 	
 	    // Ensure the bitmask index is valid
@@ -3217,7 +3222,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function encode(bytes, offset, string, length) {
 	
 	  var currentByte = offset;
-	  var stringLength = string.length;
+	  var stringLength = string ? string.length : 0;
 	
 	  // For each character in the string...
 	  for (var i = 0; i < stringLength; i++) {
@@ -3245,8 +3250,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  for (var _i = 0; _i < remainingBytes; _i++) {
 	    bytes.push(0x20); // space
 	  }
-	
-	  return bytes;
 	}
 	
 	/**

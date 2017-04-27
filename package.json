@@ -1,6 +1,6 @@
 {
   "name": "@mediacomem/biosentiers-qrcode",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "QR code binary format parser/serializer for BioSentiers",
   "main": "dist/biosentiers-qrcode.js",
   "scripts": {
